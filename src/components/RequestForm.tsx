@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,8 +35,8 @@ const formSchema = z.object({
   recipient: z.string().regex(/^[a-z]+\.[a-z]+$/, {
     message: "Invalid WEHI username",
   }),
-  folder: z.string().min(1),
-  uniqueId: z.string().min(1),
+  srcFolder: z.string().min(1),
+  sessionId: z.string().min(1),
   notes: z.string().optional(),
 });
 
@@ -57,8 +56,8 @@ export function RequestForm() {
       projectId: "",
       submitter: "",
       recipient: "",
-      folder: "",
-      uniqueId: "",
+      srcFolder: "",
+      sessionId: "",
       notes: "",
     },
   });
@@ -92,7 +91,7 @@ export function RequestForm() {
       console.log("Form submitted successfully:", data);
       toast({
         title: "Form submitted",
-        description: `${new Date().toLocaleDateString()}`,
+        description: `${new Date().toLocaleString()}`,
       });
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") {
@@ -155,7 +154,10 @@ export function RequestForm() {
                     </FormControl>
                     <SelectContent>
                       {instruments.map((instrument) => (
-                        <SelectItem key={instrument.id} value={instrument.instrumentId}>
+                        <SelectItem
+                          key={instrument.id}
+                          value={instrument.instrumentId}
+                        >
                           {instrument.displayName}
                         </SelectItem>
                       ))}
@@ -210,7 +212,7 @@ export function RequestForm() {
 
             <FormField
               control={form.control}
-              name="folder"
+              name="srcFolder"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Source folder</FormLabel>
@@ -224,14 +226,13 @@ export function RequestForm() {
 
             <FormField
               control={form.control}
-              name="uniqueId"
+              name="sessionId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Session/Run ID</FormLabel>
+                  <FormLabel>Session ID</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormDescription>As per instrument SOP</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -242,7 +243,7 @@ export function RequestForm() {
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Acquisition Notes</FormLabel>
+                  <FormLabel>Notes</FormLabel>
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
