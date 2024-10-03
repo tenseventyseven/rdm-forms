@@ -3,7 +3,7 @@ import { Instrument } from "@/components/RequestForm";
 export async function GET() {
   try {
     // Get all instruments
-    const response = await fetch(`${process.env.RDM_HOST}/api/instruments`);
+    const response = await fetch(`${process.env.RDM_API_HOST}/api/instruments`);
     if (!response.ok) {
       throw new Error("Failed to fetch instruments");
     }
