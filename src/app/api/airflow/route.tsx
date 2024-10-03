@@ -1,8 +1,7 @@
 import { FormData } from "@/components/RequestForm";
 
 const DAG_ID = "data_ingest";
-const AIRFLOW_URL = `http://atest01.hpc.wehi.edu.au:8080/api/v1/dags/${DAG_ID}/dagRuns`;
-const AUTH = "Basic YWRtaW46VUdQZ3ZOenVDWWV3V3VyYw==";
+const AIRFLOW_URL = `${process.env.AIRFLOW_SERVER}/api/v1/dags/${DAG_ID}/dagRuns`;
 
 export async function POST(req: Request): Promise<Response> {
   const formData: FormData = await req.json();
@@ -13,7 +12,7 @@ export async function POST(req: Request): Promise<Response> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: AUTH,
+        Authorization: process.env.AIRFLOW_AUTH,
       },
       body: JSON.stringify({ conf: formData }),
     });
