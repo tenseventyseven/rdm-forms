@@ -1,7 +1,7 @@
 import { FormData } from "@/components/RequestForm";
 
 const DAG_ID = "data_ingest";
-const AIRFLOW_URL = `${process.env.AIRFLOW_SERVER}/api/v1/dags/${DAG_ID}/dagRuns`;
+const AIRFLOW_URL = `${process.env.AIRFLOW_HOST}/api/v1/dags/${DAG_ID}/dagRuns`;
 
 export async function POST(req: Request): Promise<Response> {
   const formData: FormData = await req.json();
